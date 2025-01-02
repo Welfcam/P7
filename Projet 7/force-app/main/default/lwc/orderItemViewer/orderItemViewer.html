@@ -1,0 +1,111 @@
+<template>
+    <lightning-card title="Order Products" icon-name="standard:orders">
+        <div class="slds-p-around_small">
+            <h1 slot="Title" class="slds-text-heading_small slds-m-top_small slds-box slds-box_x-small slds-theme_inverse"><b>Products details</b></h1> 
+            <!-- S'il y a des produits de commande à afficher -->
+                <lightning-spinner if:true={isLoading}></lightning-spinner>
+                <div class="slds-m-top_small slds-m-bottom_small">
+                    <lightning-button label="Refresh"
+                                    onclick={handleRefresh} 
+                                    variant="brand">
+                    </lightning-button>
+                </div>
+                <template lwc:if={orderProducts}>
+                <lightning-datatable data={orderProducts}
+                                    columns={columns}
+                                    key-field="Id"
+                                    class="slds-theme_default"
+                                    onrowaction={handleRowAction}
+                                    hide-checkbox-column="true">
+                </lightning-datatable>
+                <template lwc:if={isOrderActivated}>
+                    <h1 slot="Title" class="slds-text-heading_small slds-m-top_large slds-box slds-box_x-small slds-theme_inverse"><b>Delivery Summary</b></h1>
+                    <div class ="slds-box slds-grid">
+                        <div class="slds-col">
+                            <span>
+                                <p><b>ACCOUNT NAME :</b> {accountName}</p>
+                                <p><b>SHIPPING ADDRESS :</b></p>
+                                <p>{shippingStreet}</p>
+                                <p>{shippingPostalCode} {shippingCity}</p>
+                                <p>{shippingCountry}</p>
+                            </span>
+                        </div>
+                        <div class="slds-col">
+                            <span>
+                                <p><b>PRODUCT QUANTITY :</b> {orderQuantity}</p>
+                                <p><b>SELECTED TRANSPORTER :</b> {selectedTransporterName}</p>
+                                <p><b>ORDER GLOBAL COST :</b> {orderGlobalCost}</p>
+                            </span>
+                        </div>
+                    </div>
+                </template>
+                <template lwc:else>
+                    <template if:true={canViewTransporterOptions}>
+                        <h1 slot="Title" class="slds-text-heading_small slds-m-top_large slds-box slds-box_x-small slds-theme_inverse"><b>Transporter</b></h1>
+                            <div class="slds-box">
+                                <lightning-radio-group name="radioGroup" class="slds-m-bottom_large"
+                                    label="Choose a transporter"
+                                    options={options}
+                                    value={transpOption}
+                                    onchange={handleTransporterChoice}
+                                    required
+                                    type="radio">
+                                </lightning-radio-group>
+                                <lightning-datatable data={transporter}
+                                                    columns={transporterColumns}
+                                                    key-field="Id"
+                                                    class="slds-theme_default"
+                                                    onrowaction={handleChoose}
+                                                    hide-checkbox-column="true">
+                                </lightning-datatable>
+                            </div>
+                        <h1 slot="Title" class="slds-text-heading_small slds-m-top_large slds-box slds-box_x-small slds-theme_inverse"><b>Delivery Summary</b></h1>
+                        <div class ="slds-box slds-grid">
+                            <div class="slds-col">
+                                <span>
+                                    <p><b>ACCOUNT NAME :</b> {accountName}</p>
+                                    <p><b>SHIPPING ADDRESS :</b></p>
+                                    <p>{shippingStreet}</p>
+                                    <p>{shippingPostalCode} {shippingCity}</p>
+                                    <p>{shippingCountry}</p>
+                                </span>
+                            </div>
+                            <div class="slds-col">
+                                <span>
+                                    <p><b>PRODUCT QUANTITY :</b> {orderQuantity}</p>
+                                    <p><b>SELECTED TRANSPORTER :</b> {selectedTransporterName}</p>
+                                    <p><b>ORDER GLOBAL COST :</b> {orderGlobalCost}</p> 
+                                </span>
+                            </div>
+                            <div class="slds-col slds-col_bump-right">
+                                <span>
+                                    <template lwc:if={isTransporterSelected}>
+                                        <lightning-button
+                                                    label="Activate Order"
+                                                    onclick={handleActivateOrder} 
+                                                    variant="brand">
+                                        </lightning-button>
+                                    </template>
+                                </span>
+                            </div>
+                        </div>
+                    </template>
+                </template>
+            </template>                                                                 
+            <!-- S'il n'y a aucun produit de commande, affichage d'un message informatif-->    
+            <template lwc:elseif={emptyTable}>
+                <div>
+                    <h2>{emptyTable}</h2>
+                </div>
+            </template>
+            <!--S'il y a une erreur au chargement des produits de commande, affichage d'un message d'erreur -->
+            <template lwc:else>
+                <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error" role="contentinfo">
+                    <span class="slds-assistive-text">Error</span>
+                    <h2>{error}</h2>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>
+
