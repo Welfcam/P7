@@ -1,6 +1,7 @@
 @isTest
 private class OpportunityLineItemControllerTest {
 
+    //Test des données de 3 Opportunity Line Item récupérées par OpportunityLineItemController pour un compte Business
     @isTest
     static void test3OppProdOnBizAccount() {
         Account acctBiz = TestDataFactory.createBusinessAccountTest();
@@ -19,6 +20,7 @@ private class OpportunityLineItemControllerTest {
         Assert.areEqual(1500, results[2].PricebookEntry.UnitPrice, 'Should return 1500');
     }
 
+    //Test des données de 3 Opportunity Line Item récupérées par OpportunityLineItemController pour un compte Person
     @isTest
     static void test3OppProdOnPersonAccount() {
         Account acctPers = TestDataFactory.createPersonAccountTest();
@@ -37,6 +39,7 @@ private class OpportunityLineItemControllerTest {
         Assert.areEqual(3000, results[0].PricebookEntry.UnitPrice, 'Should return 3000');
     }
 
+    //Test des données d'1 Opportunity Line Item récupérées par OpportunityLineItemController pour un compte Person
     @isTest
     static void test1OppProdOnPersonAccount() {
         Account acctPers = TestDataFactory.createPersonAccountTest();
