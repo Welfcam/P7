@@ -13,6 +13,7 @@ export default class OpportunityProductViewer extends NavigationMixin(LightningE
     emptyTable;
     totalQuantity;
 
+    //Colonnes du tableau d'affichage des Opportunités Produits
     columns = [
         { label: 'Name', fieldName: 'Name', type: 'text'},
         { label: 'Quantity', fieldName: 'Quantity', type: 'number'},
@@ -38,6 +39,7 @@ export default class OpportunityProductViewer extends NavigationMixin(LightningE
         }
     ];
 
+    //Récupère les données relatives aux opportunités produit
     @wire(getOpportunityLineItem, { opportunityId: '$recordId'})
     wiredOpportunityLineItemResult (result) {
         this.wiredOpportunityLineItemResult = result;
@@ -114,6 +116,4 @@ export default class OpportunityProductViewer extends NavigationMixin(LightningE
     refreshRelatedList() {
         this.dispatchEvent(new RefreshEvent());
     }
-
-    
 }
