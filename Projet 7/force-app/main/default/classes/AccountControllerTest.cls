@@ -1,3 +1,4 @@
+//test des données de comptes récupérées par AccountControlleur
 @isTest
 private class AccountControllerTest {
     @isTest
@@ -8,7 +9,7 @@ private class AccountControllerTest {
         Assert.areEqual('Energy', acctBiz.Industry, 'Should return Energy');
         Assert.areEqual('Paris', acctBiz.BillingCity, 'Should return Paris');
     }
-
+ 
     static void testPersonAccount() {
         Account acctPers = TestDataFactory.createPersonAccountTest();
         Account controllerAccount = AccountController.getAccount(acctPers.Id);

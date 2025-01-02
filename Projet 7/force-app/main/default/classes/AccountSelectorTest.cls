@@ -1,6 +1,7 @@
 @isTest
 private class AccountSelectorTest {
 
+    //Test des données de comptes récupérées par AccountSelector
     @isTest
     static void testAccountBiz() {
         Account acctBiz = TestDataFactory.createBusinessAccountTest();
